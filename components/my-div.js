@@ -60,123 +60,128 @@ export default class myTabla extends HTMLElement {
             type: "module"
         });
         let data = Object.fromEntries(new FormData(e.target));
-        switch (e.submitter.dataset.valor) {
-            case "get":
+        const {
+            valor
+        } = e.submitter.dataset;
+
+        if (valor === "get") {
+            ws.postMessage({
+                type: GET_USER_ALL,
+            });
+        } else if (valor === "post") {
+            const callback = () => {
                 ws.postMessage({
                     type: GET_USER_ALL,
                 });
-                break;
-            case "post":
-                ws.postMessage({
-                    type: POST_USER,
-                    arg: data
-                });
-                break;
-            case "delete":
-                ws.postMessage({
-                    type: DELETE_USER,
-                    arg: data
-                });
-                break;
-            case "put":
-                ws.postMessage({
-                    type: PUT_USER,
-                    arg: data
-                });
-                break;
-            case "search":
-                ws.postMessage({
-                    type: SEARCH_USER,
-                    arg: data.nombre,
-                });
-                break;
-            default:
-                break;
-        }
-        ws.addEventListener("message", (e) => {
-            console.log(e.data);
-            this.displayDataInTable(e.data);
-            ws.terminate();
-        })
-    }
-    
-    async displayDataInTable(data) {
-        try {
-            await this.content()
-            const tableBody = this.shadowRoot.querySelector("#myData");
-            console.log('display: ', this.shadowRoot)
-            /* tableBody.innerHTML = ""; */
+                this.displayDataInTable(); // Llamar a displayDataInTable después del POST
+            };
 
-            if (!Array.isArray(data)) {
-                throw new Error("Datos inválidos proporcionados. Se esperaba un array.");
-            }
-
-            const sortedData = data.sort((a, b) => a.id - b.id);
-            console.log(data);
-
-            sortedData.forEach((user) => {
-                const row = document.createElement("tr");
-
-                const idCell = document.createElement("td");
-                idCell.textContent = user.id;
-                row.appendChild(idCell);
-
-                const nombreCell = document.createElement("td");
-                nombreCell.textContent = user.nombre || "";
-                row.appendChild(nombreCell);
-
-                const apellidoCell = document.createElement("td");
-                apellidoCell.textContent = user.apellido || "";
-                row.appendChild(apellidoCell);
-
-                const edadCell = document.createElement("td");
-                edadCell.textContent = user.edad || "";
-                row.appendChild(edadCell);
-
-                /* const deleteCell = document.createElement("td");
-                const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Eliminar";
-                deleteButton.addEventListener("submit", () => {
-                    this.deleteUser(user);
-                });
-                deleteCell.appendChild(deleteButton);
-                row.appendChild(deleteCell);
-
-                const editCell = document.createElement("td");
-                const editButton = document.createElement("button");
-                editButton.textContent = "Actulizar";
-                editButton.addEventListener("submit", () => {
-                    this.putUser(user);
-                });
-                editCell.appendChild(editButton);
-                row.appendChild(editCell); */
-
-                tableBody.appendChild(row);
+            ws.postMessage({
+                type: POST_USER,
+                arg: data,
+                callback: callback.toString()
             });
-        } catch (error) {
-            console.log(error);
+    } else if (valor === "delete") {
+        ws.postMessage({
+            type: DELETE_USER,
+            arg: data
+        });
+    } else if (valor === "put") {
+        ws.postMessage({
+            type: PUT_USER,
+            arg: data
+        });
+    } else if (valor === "search") {
+        ws.postMessage({
+            type: SEARCH_USER,
+            arg: data.nombre,
+        });
+    }
+
+    ws.addEventListener("message", (e) => {
+        console.log(e.data);
+        this.displayDataInTable(e.data);
+        ws.terminate();
+    });
+}
+
+async displayDataInTable(data) {
+    try {
+        await this.content()
+        const tableBody = this.shadowRoot.querySelector("#myData");
+        console.log('display: ', this.shadowRoot)
+        /* tableBody.innerHTML = ""; */
+
+        if (!Array.isArray(data)) {
+            throw new Error("Datos inválidos proporcionados. Se esperaba un array.");
         }
 
-    }
+        const sortedData = data.sort((a, b) => a.id - b.id);
+        console.log(data);
 
-    static get observedAttributes() {
-        return ['data-accion'];
-    }
-    attributeChangedCallback(name, old, now) {
-        console.log(name, old, now);
-        console.log(this.dataset.accion);
-    }
-    connectedCallback() {
-        /* const table = new myTabla();
-        table.displayDataInTable(); */
-        /* Promise.resolve(myTabla.components()).then((html) => {
-            this.shadowRoot.innerHTML = html;
-            this.form = this.shadowRoot.querySelector("#myForm");
-            this.form.addEventListener("submit", this.handleEvent.bind(this));
+        sortedData.forEach((user) => {
+            const row = document.createElement("tr");
+
+            const idCell = document.createElement("td");
+            idCell.textContent = user.id;
+            row.appendChild(idCell);
+
+            const nombreCell = document.createElement("td");
+            nombreCell.textContent = user.nombre || "";
+            row.appendChild(nombreCell);
+
+            const apellidoCell = document.createElement("td");
+            apellidoCell.textContent = user.apellido || "";
+            row.appendChild(apellidoCell);
+
+            const edadCell = document.createElement("td");
+            edadCell.textContent = user.edad || "";
+            row.appendChild(edadCell);
+
+            /* const deleteCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Eliminar";
+            deleteButton.addEventListener("submit", () => {
+                this.deleteUser(user);
+            });
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            const editCell = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.textContent = "Actulizar";
+            editButton.addEventListener("submit", () => {
+                this.putUser(user);
+            });
+            editCell.appendChild(editButton);
+            row.appendChild(editCell); */
+
+            tableBody.appendChild(row);
         });
-
-         */
+    } catch (error) {
+        console.log(error);
     }
+
+}
+
+static get observedAttributes() {
+    return ['data-accion'];
+}
+attributeChangedCallback(name, old, now) {
+    console.log(name, old, now);
+    console.log(this.dataset.accion);
+}
+connectedCallback() {
+    /* const table = new myTabla();
+    table.displayDataInTable(); */
+    /* Promise.resolve(myTabla.components()).then((html) => {
+        this.shadowRoot.innerHTML = html;
+        this.form = this.shadowRoot.querySelector("#myForm");
+        this.form.addEventListener("submit", this.handleEvent.bind(this));
+    });
+
+     */
+}
 
 }
 customElements.define(config.name(myTabla.url), myTabla);

@@ -8,11 +8,6 @@ import {
     SEARCH_USER
 } from '../constants/requestTypes.js'
 
-document.addEventListener("DOMContentLoaded", (e) => {
-    e.preventDefault();
-    const tableBody = this.shadowRoot.querySelector("#myData");
-    let plantilla=``
-}); //va por fuera de la clase
 
 export default class myTabla extends HTMLElement {
     static url =
@@ -26,6 +21,7 @@ export default class myTabla extends HTMLElement {
         super();
         this.attachShadow({
             mode: "open"
+
         });
         this.content(
             Promise.resolve(myTabla.components()).then(html => {
@@ -36,7 +32,6 @@ export default class myTabla extends HTMLElement {
                 this.form.addEventListener("submit", this.handleEvent.bind(this))
             }))
     }
-
 
 
     _shadowRoot = () => {
@@ -68,7 +63,7 @@ export default class myTabla extends HTMLElement {
         switch (e.submitter.dataset.valor) {
             case "get":
                 ws.postMessage({
-                    type: GET_USER_ALL
+                    type: GET_USER_ALL,
                 });
                 break;
             case "post":
@@ -104,7 +99,7 @@ export default class myTabla extends HTMLElement {
             ws.terminate();
         })
     }
-
+    
     async displayDataInTable(data) {
         try {
             await this.content()
@@ -117,6 +112,8 @@ export default class myTabla extends HTMLElement {
             }
 
             const sortedData = data.sort((a, b) => a.id - b.id);
+            console.log(data);
+
             sortedData.forEach((user) => {
                 const row = document.createElement("tr");
 
@@ -136,10 +133,10 @@ export default class myTabla extends HTMLElement {
                 edadCell.textContent = user.edad || "";
                 row.appendChild(edadCell);
 
-                const deleteCell = document.createElement("td");
+                /* const deleteCell = document.createElement("td");
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Eliminar";
-                deleteButton.addEventListener("click", () => {
+                deleteButton.addEventListener("submit", () => {
                     this.deleteUser(user);
                 });
                 deleteCell.appendChild(deleteButton);
@@ -148,11 +145,11 @@ export default class myTabla extends HTMLElement {
                 const editCell = document.createElement("td");
                 const editButton = document.createElement("button");
                 editButton.textContent = "Actulizar";
-                editButton.addEventListener("click", () => {
+                editButton.addEventListener("submit", () => {
                     this.putUser(user);
                 });
                 editCell.appendChild(editButton);
-                row.appendChild(editCell);
+                row.appendChild(editCell); */
 
                 tableBody.appendChild(row);
             });

@@ -1,83 +1,31 @@
 {
-  "usuarios": [
+  "reclutas": [
     {
-      "id": "2",
-      "nombre": "carlos",
-      "apellido": "asda",
-      "edad": "33"
-    },
-    {
-      "id": "3",
-      "nombre": "casa",
-      "apellido": "red",
-      "edad": "22"
-    },
-    {
-      "id": "4",
-      "nombre": "seb",
-      "apellido": "dert",
-      "edad": "22"
-    },
-    {
-      "id": "5",
-      "nombre": "esd",
-      "apellido": "was",
-      "edad": "12"
-    },
-    {
-      "id": "6",
-      "nombre": "feto",
-      "apellido": "fetico",
-      "edad": "32"
-    },
-    {
-      "id": "8",
-      "nombre": "das",
-      "apellido": "dasd",
-      "edad": "12"
-    },
-    {
-      "id": "11",
-      "nombre": "safer",
-      "apellido": "wase",
-      "edad": "31"
-    },
-    {
-      "id": "21",
-      "nombre": "dace",
-      "apellido": "resd",
-      "edad": "23"
-    },
-    {
-      "id": "1",
-      "nombre": "jose",
-      "apellido": "cabrejo",
-      "edad": "21"
-    },
-    {
-      "id": "14",
-      "nombre": "ddasd",
-      "apellido": "adsda",
-      "edad": "22"
-    },
-    {
-      "id": "15",
-      "nombre": "sdas",
-      "apellido": "adsda",
-      "edad": "1212"
-    },
-    {
-      "id": "33",
-      "nombre": "los",
-      "apellido": "car",
-      "edad": "12"
-    },
-    {
-      "id": "121",
-      "nombre": "",
-      "apellido": "",
-      "edad": ""
+      "id": 2,
+      "nombre": "david",
+      "edad": "22",
+      "email": "dav",
+      "direccion": "casade",
+      "fecha_de_nacimiento": "2002",
+      "numero_de_identificacion": "1858726726",
+      "fecha_de_ingreso_al_programa": "enero",
+      "team": {
+        "id": "1",
+        "nombre": "artemis",
+        "trainer_asociado": "vermer"
+      },
+      "evaluacion": {
+        "id": 2,
+        "nota": "4",
+        "skill": {
+          "id": "1",
+          "nombre": "javascript",
+          "moduloSkill": {
+            "id": "2",
+            "nombre": "workers"
+          }
+        }
+      }
     }
-  ],
-  "dirreciones": []
+  ]
 }

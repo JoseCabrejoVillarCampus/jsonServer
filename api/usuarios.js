@@ -3,43 +3,43 @@ let headers = new Headers({
 });
 let puerto = 4001;
 
-const postUser = async (arg) => {
+const postRecluta = async (arg) => {
     arg.id = (arg.id) ? arg.id : Date.now();
     let config = {
         method: "POST",
         headers: headers,
         body: JSON.stringify(arg)
     };
-    return await (await fetch(`http://localhost:${puerto}/usuarios`, config)).json();
+    return await (await fetch(`http://localhost:${puerto}/reclutas`, config)).json();
 }
-const getUserAll = async () => {
+const getReclutaAll = async () => {
     let config = {
         method: "GET",
         headers: headers
     };
-    return await (await fetch(`http://localhost:${puerto}/usuarios`, config)).json();
+    return await (await fetch(`http://localhost:${puerto}/reclutas`, config)).json();
 }
-const delteUser = async (arg) => {
+const deleteRecluta = async (arg) => {
     let config = {
         method: "DELETE",
         headers: headers,
     };
-    return await (await fetch(`http://localhost:${puerto}/usuarios/${arg.id}`, config)).json();
+    return await (await fetch(`http://localhost:${puerto}/reclutas/${arg.id}`, config)).json();
 }
-const putUser = async (arg) => {
+const putRecluta = async (arg) => {
     let config = {
         method: "PUT",
         headers: headers,
         body: JSON.stringify(arg)
     };
-    return await (await fetch(`http://localhost:${puerto}/usuarios/${arg.id}`, config)).json();
+    return await (await fetch(`http://localhost:${puerto}/reclutas/${arg.id}`, config)).json();
 }
-const searchUser = async (arg) => {
-    const response = await fetch(`http://localhost:${puerto}/usuarios`);
+const searchRecluta = async (arg) => {
+    const response = await fetch(`http://localhost:${puerto}/reclutas`);
     const data = await response.json();
 
     if (response.ok) {
-        const filteredData = data.filter(user => user.nombre === arg || user.id === arg);
+        const filteredData = data.filter(user => user.nombre === arg);
         return filteredData;
     } else {
         console.error("Error al obtener los usuarios del servidor.");
@@ -47,9 +47,9 @@ const searchUser = async (arg) => {
     }
 };
 export default {
-    postUser,
-    getUserAll,
-    delteUser,
-    putUser,
-    searchUser
+    postRecluta,
+    getReclutaAll,
+    deleteRecluta,
+    putRecluta,
+    searchRecluta
 }

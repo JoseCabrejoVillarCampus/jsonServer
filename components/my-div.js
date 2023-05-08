@@ -1,11 +1,11 @@
 import config from "../config/config.js";
 /* import usuarios from "../api/usuarios.js"; */
 import {
-    GET_USER_ALL,
-    POST_USER,
-    DELETE_USER,
-    PUT_USER,
-    SEARCH_USER
+    GET_RECLUTA_ALL,
+    POST_RECLUTA,
+    DELETE_RECLUTA,
+    PUT_RECLUTA,
+    SEARCH_RECLUTA
 } from '../constants/requestTypes.js'
 
 
@@ -66,35 +66,35 @@ export default class myTabla extends HTMLElement {
 
         if (valor === "get") {
             ws.postMessage({
-                type: GET_USER_ALL,
+                type: GET_RECLUTA_ALL,
             });
         } else if (valor === "post") {
             const callback = () => {
                 ws.postMessage({
-                    type: GET_USER_ALL,
+                    type: GET_RECLUTA_ALL,
                 });
                 this.displayDataInTable(); // Llamar a displayDataInTable después del POST
             };
 
             ws.postMessage({
-                type: POST_USER,
+                type: POST_RECLUTA,
                 arg: data,
                 callback: callback.toString()
             });
     } else if (valor === "delete") {
         ws.postMessage({
-            type: DELETE_USER,
+            type: DELETE_RECLUTA,
             arg: data
         });
     } else if (valor === "put") {
         ws.postMessage({
-            type: PUT_USER,
+            type: PUT_RECLUTA,
             arg: data
         });
     } else if (valor === "search") {
         ws.postMessage({
-            type: SEARCH_USER,
-            arg: data.nombre,
+            type: SEARCH_RECLUTA,
+            arg: data.nombre || data.id ,
         });
     }
 
@@ -128,15 +128,49 @@ async displayDataInTable(data) {
 
             const nombreCell = document.createElement("td");
             nombreCell.textContent = user.nombre || "";
+            console.log(user.nombre);
             row.appendChild(nombreCell);
-
-            const apellidoCell = document.createElement("td");
-            apellidoCell.textContent = user.apellido || "";
-            row.appendChild(apellidoCell);
 
             const edadCell = document.createElement("td");
             edadCell.textContent = user.edad || "";
             row.appendChild(edadCell);
+
+            const emailCell = document.createElement("td");
+            emailCell.textContent = user.email || "";
+            row.appendChild(emailCell);
+
+            const direccionCell = document.createElement("td");
+            direccionCell.textContent = user.direccion || "";
+            row.appendChild(direccionCell);
+
+            const fecha_de_nacimientoCell = document.createElement("td");
+            fecha_de_nacimientoCell.textContent = user.fecha_de_nacimiento || "";
+            row.appendChild(fecha_de_nacimientoCell);
+
+            const numero_de_identificacionCell = document.createElement("td");
+            numero_de_identificacionCell.textContent = user.numero_de_identificacion || "";
+            row.appendChild(numero_de_identificacionCell);
+
+            const fecha_de_ingreso_al_programaCell = document.createElement("td");
+            fecha_de_ingreso_al_programaCell.textContent = user.fecha_de_ingreso_al_programa || "";
+            row.appendChild(fecha_de_ingreso_al_programaCell);
+
+            const id_teamCell = document.createElement("td");
+            id_teamCell.textContent = user.team.nombre || "";
+            console.log('display', user.team.nombre);
+            row.appendChild(id_teamCell); 
+
+            const id_notaCell = document.createElement("td");
+            id_notaCell.textContent = user.evaluacion.skill.nombre || "";
+            row.appendChild(id_notaCell);  
+
+            const id_skillCell = document.createElement("td");
+            id_skillCell.textContent = user.evaluacion.skill.moduloSkill.nombre || "";
+            row.appendChild(id_skillCell);
+
+            const id_modCell = document.createElement("td");
+            id_modCell.textContent = user.evaluacion.nota || "";
+            row.appendChild(id_modCell);
 
             /* const deleteCell = document.createElement("td");
             const deleteButton = document.createElement("button");

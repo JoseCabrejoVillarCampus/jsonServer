@@ -1,0 +1,62 @@
+
+
+<!-- <form class="container" id="busqueda">
+    <input type="text" name="searchTerm" placeholder="A quien buscamos?">
+    <input type="submit" data-valor="search" value="buscar">
+</form><br>
+<div class="container-fluid">
+    <div><h1>Evaluacion</h1></div>
+    <div><form class="container" id="myForm">
+        <input type="text" name="id_recluta" placeholder="Ingrese el Id del Recluta"><br><br>
+        <input type="text" name="id_modulo" placeholder="Ingrese el Id del Modulo"><br><br>
+        <input type="text" name="nota" placeholder="Ingrese la Nota"><br><br>
+    
+        
+        <input type="submit" data-valor="post" value="Enviar">
+        
+        <input type="submit" data-valor="put" value="actualizar">
+        <input type="submit" data-valor="delete" value="eliminar"><br><br>
+    </form><br></div> -->
+    <div><h4>EVALUACIONES</h4></div>
+    <div><form class="container" id="myForm"><input type="submit" data-valor="get" value="obtener"></form></div>
+    
+    
+    <div><table id="myTable">
+        <thead>
+            <tr>
+                <th>Id Recluta</th>
+                <th>Nombre Recluta</th>
+                <th>Id Modulo</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody id="myData"></tbody>
+    </table></div>
+</div>
+    
+    
+
+
+<style>
+    div{
+        display: flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
+    }
+    tbody{
+        
+        text-align: center;
+    }
+    tbody{
+        
+        text-align: center;
+    }
+    th,td{
+    border: solid 3px white;
+    border-radius: 3%;
+}
+h4{
+    text-shadow: 3px 3px 2px rgb(248, 0, 0);
+    }
+</style>
